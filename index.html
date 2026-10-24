@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameFusion — Python Multi-Game Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Canvas for celebration confetti -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="app-layout">
+    <!-- TOP NAVIGATION HEADER -->
+    <header class="hub-header">
+      <div class="header-brand">
+        <div class="brand-icon">🎮</div>
+        <div class="brand-text">
+          <h1>GameFusion</h1>
+          <span class="sub-badge">Python & NumPy Multi-Game Hub</span>
+        </div>
+      </div>
+
+      <nav class="hub-nav">
+        <button class="nav-btn active" data-tab="hub"><span class="nav-icon">🏠</span> Hub</button>
+        <button class="nav-btn" data-tab="rps"><span class="nav-icon">✂️</span> Rock Paper Scissors</button>
+        <button class="nav-btn" data-tab="guess"><span class="nav-icon">🎯</span> Guess the Number</button>
+        <button class="nav-btn" data-tab="scoreboard"><span class="nav-icon">📊</span> Scoreboard</button>
+        <button class="nav-btn" data-tab="terminal"><span class="nav-icon">📟</span> Python CLI</button>
+        <button class="nav-btn" data-tab="code"><span class="nav-icon">💻</span> Source Code</button>
+      </nav>
+
+      <div class="header-actions">
+        <button id="sound-toggle-btn" class="icon-toggle-btn" title="Toggle Sound FX">
+          <span id="sound-icon">🔊</span>
+        </button>
+        <a href="#code" class="btn-github-pill" data-tab-trigger="code">
+          <span>Python 3.x</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- QUICK STATS BAR -->
+    <section class="ticker-bar">
+      <div class="ticker-item">
+        <span class="ticker-label">Total Played:</span>
+        <span class="ticker-val" id="ticker-total-played">0</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-label">RPS Win Rate:</span>
+        <span class="ticker-val" id="ticker-rps-winrate">0%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-label">Guess Best:</span>
+        <span class="ticker-val" id="ticker-guess-best">—</span>
+      </div>
+      <div class="ticker-item">
+        <span class="ticker-label">Current Streak:</span>
+        <span class="ticker-val highlight" id="ticker-streak">0 🔥</span>
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT VIEWPORTS -->
+    <main class="main-stage">
+      
+      <!-- ================= 1. HUB / HOME VIEW ================= -->
+      <section id="view-hub" class="tab-view active">
+        <div class="hero-banner">
+          <div class="hero-content">
+            <span class="hero-badge">Welcome to GameFusion</span>
+            <h2>Interactive Multi-Game Experience</h2>
+            <p>Originally engineered in Python using NumPy's randomized array operations. Play the modernized web edition, challenge the AI, test your luck, or interact with the native Python CLI simulation!</p>
+            <div class="hero-cta">
+              <button class="btn btn-primary" data-tab-trigger="rps">Play Rock Paper Scissors ⚔️</button>
+              <button class="btn btn-secondary" data-tab-trigger="guess">Play Number Guessing 🎯</button>
+              <button class="btn btn-outline" data-tab-trigger="terminal">Launch Python Terminal 📟</button>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="floating-card c1">
+              <span class="floating-emoji">🪨</span>
+              <span>Rock, Paper, Scissors</span>
+            </div>
+            <div class="floating-card c2">
+              <span class="floating-emoji">🎲</span>
+              <span>NumPy Random Choice</span>
+            </div>
+            <div class="floating-card c3">
+              <span class="floating-emoji">🎯</span>
+              <span>1 - 100 Guess Engine</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="games-grid">
+          <!-- Card 1 -->
+          <div class="game-card">
+            <div class="game-card-badge">Game 01</div>
+            <div class="game-icon-large">✂️</div>
+            <h3>Rock, Paper, Scissors</h3>
+            <p>Battle against the computer algorithm. Features instant NumPy-inspired randomized pick, win streak tracking, and match history logs.</p>
+            <div class="game-card-meta">
+              <span>⚡ Fast-Paced</span>
+              <span>🤖 AI Opponent</span>
+            </div>
+            <button class="btn btn-block btn-primary" data-tab-trigger="rps">Launch Game →</button>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="game-card">
+            <div class="game-card-badge">Game 02</div>
+            <div class="game-icon-large">🎯</div>
+            <h3>Guess the Number</h3>
+            <p>A hidden integer between 1 and 100 is chosen. Narrow down the range with real-time Too High / Too Low visual feedback and temperature guides.</p>
+            <div class="game-card-meta">
+              <span>🧠 Logic & Deduction</span>
+              <span>🏆 Fewest Tries Best</span>
+            </div>
+            <button class="btn btn-block btn-primary" data-tab-trigger="guess">Launch Game →</button>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="game-card">
+            <div class="game-card-badge">Analytics</div>
+            <div class="game-icon-large">📊</div>
+            <h3>Separated Scoreboard</h3>
+            <p>View consolidated and separated game statistics, player win percentages, computer counter-scores, and best attempt records.</p>
+            <div class="game-card-meta">
+              <span>💾 Local Persistence</span>
+              <span>📈 Live Metrics</span>
+            </div>
+            <button class="btn btn-block btn-secondary" data-tab-trigger="scoreboard">View Stats →</button>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="game-card">
+            <div class="game-card-badge">CLI Simulator</div>
+            <div class="game-icon-large">📟</div>
+            <h3>Python CLI Terminal</h3>
+            <p>Experience the exact command-line menu interface from <code>main_project.py</code> inside an authentic interactive browser terminal.</p>
+            <div class="game-card-meta">
+              <span>🐍 Pure Python Logic</span>
+              <span>⌨️ Keyboard Controls</span>
+            </div>
+            <button class="btn btn-block btn-outline" data-tab-trigger="terminal">Open Terminal →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 2. ROCK, PAPER, SCISSORS ================= -->
+      <section id="view-rps" class="tab-view">
+        <div class="game-container">
+          <div class="game-header-bar">
+            <div>
+              <h2>Rock, Paper, Scissors</h2>
+              <p class="section-desc">Choose your weapon. The computer selects simultaneously using random choice.</p>
+            </div>
+            <div class="mini-score-pill">
+              <span>You: <strong id="rps-mini-user">0</strong></span>
+              <span>CPU: <strong id="rps-mini-cpu">0</strong></span>
+              <span>Ties: <strong id="rps-mini-ties">0</strong></span>
+            </div>
+          </div>
+
+          <!-- Battle Arena -->
+          <div class="rps-arena">
+            <div class="fighter-side player-side">
+              <span class="fighter-label">Player</span>
+              <div class="fighter-avatar" id="player-avatar">
+                <span class="avatar-icon" id="player-choice-icon">❓</span>
+              </div>
+              <span class="fighter-choice-name" id="player-choice-name">Make your move</span>
+            </div>
+
+            <div class="vs-divider">
+              <span class="vs-text">VS</span>
+              <div class="arena-status" id="rps-round-status">Ready</div>
+            </div>
+
+            <div class="fighter-side cpu-side">
+              <span class="fighter-label">Computer (NumPy AI)</span>
+              <div class="fighter-avatar" id="cpu-avatar">
+                <span class="avatar-icon" id="cpu-choice-icon">❓</span>
+              </div>
+              <span class="fighter-choice-name" id="cpu-choice-name">Waiting...</span>
+            </div>
+          </div>
+
+          <!-- Outcome Announcement Banner -->
+          <div class="outcome-box hidden" id="rps-outcome-box">
+            <div class="outcome-title" id="rps-outcome-title">You Win!</div>
+            <div class="outcome-explanation" id="rps-outcome-explanation">Whoever takes rock(r), is win</div>
+          </div>
+
+          <!-- Weapons Selection -->
+          <div class="weapon-selection-wrapper">
+            <div class="section-subheading">Select your choice:</div>
+            <div class="weapons-grid">
+              <button class="weapon-btn" data-weapon="r" id="btn-weapon-r">
+                <span class="weapon-emoji">🪨</span>
+                <span class="weapon-title">Rock (r)</span>
+                <span class="weapon-beats">Beats Scissors</span>
+              </button>
+              <button class="weapon-btn" data-weapon="p" id="btn-weapon-p">
+                <span class="weapon-emoji">📄</span>
+                <span class="weapon-title">Paper (p)</span>
+                <span class="weapon-beats">Beats Rock</span>
+              </button>
+              <button class="weapon-btn" data-weapon="s" id="btn-weapon-s">
+                <span class="weapon-emoji">✂️</span>
+                <span class="weapon-title">Scissors (s)</span>
+                <span class="weapon-beats">Beats Paper</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Round History -->
+          <div class="history-panel">
+            <div class="history-header">
+              <h4>Recent Matches</h4>
+              <button class="btn-text" id="clear-rps-history">Clear History</button>
+            </div>
+            <div class="history-chips-list" id="rps-history-list">
+              <span class="empty-state">No rounds played yet. Make your first move!</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 3. GUESS THE NUMBER ================= -->
+      <section id="view-guess" class="tab-view">
+        <div class="game-container">
+          <div class="game-header-bar">
+            <div>
+              <h2>Guess The Number</h2>
+              <p class="section-desc">NumPy generated a secret number between <strong>1 and 100</strong>. Can you discover it in the fewest attempts?</p>
+            </div>
+            <div class="mini-score-pill">
+              <span>Attempts: <strong id="guess-current-attempts">0</strong></span>
+              <span>Best: <strong id="guess-current-best">—</strong></span>
+            </div>
+          </div>
+
+          <!-- Active Guessing Board -->
+          <div class="guess-board">
+            <!-- Range visualizer -->
+            <div class="range-tracker">
+              <div class="range-labels">
+                <span id="range-min-label">Min: 1</span>
+                <span class="range-target-hint" id="temperature-badge">🎯 Cold</span>
+                <span id="range-max-label">Max: 100</span>
+              </div>
+              <div class="range-bar-track">
+                <div class="range-bar-fill" id="range-progress-fill" style="left: 0%; width: 100%;"></div>
+                <div class="range-pointer" id="range-pointer" style="left: 50%;">?</div>
+              </div>
+              <div class="range-narrow-text" id="range-bounds-text">Current valid range: <strong>1 to 100</strong></div>
+            </div>
+
+            <!-- Hint Display Box -->
+            <div class="guess-feedback-card neutral" id="guess-feedback">
+              <div class="feedback-icon" id="feedback-icon">🎲</div>
+              <div class="feedback-text">
+                <h3 id="feedback-main">Start Guessing!</h3>
+                <p id="feedback-sub">Enter any integer between 1 and 100 below.</p>
+              </div>
+            </div>
+
+            <!-- Input area -->
+            <form id="guess-form" class="guess-input-form" onsubmit="return false;">
+              <div class="input-group-large">
+                <input 
+                  type="number" 
+                  id="guess-input" 
+                  min="1" 
+                  max="100" 
+                  placeholder="Enter 1 - 100" 
+                  autocomplete="off" 
+                  required
+                />
+                <button type="submit" id="btn-submit-guess" class="btn btn-primary btn-large">
+                  Submit Guess 🚀
+                </button>
+              </div>
+              <div class="quick-helpers">
+                <span class="quick-title">Quick presets:</span>
+                <button type="button" class="preset-btn" data-val="25">25</button>
+                <button type="button" class="preset-btn" data-val="50">50</button>
+                <button type="button" class="preset-btn" data-val="75">75</button>
+                <button type="button" class="btn-text" id="btn-new-guess-game">🔄 Restart Game</button>
+              </div>
+            </form>
+
+            <!-- Attempts history list -->
+            <div class="attempts-trail">
+              <h4>Attempts Trail:</h4>
+              <div class="chips-row" id="guess-attempts-trail">
+                <span class="empty-state">No guesses submitted yet.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 4. SCOREBOARD & ANALYTICS ================= -->
+      <section id="view-scoreboard" class="tab-view">
+        <div class="game-container">
+          <div class="game-header-bar">
+            <div>
+              <h2>Separated Game Scoreboard</h2>
+              <p class="section-desc">Consolidated statistics matching the Python data structure in <code>main_project.py</code>.</p>
+            </div>
+            <button class="btn btn-danger-pill" id="btn-reset-all-scores">⚠️ Reset All Scores</button>
+          </div>
+
+          <div class="scoreboard-grid">
+            <!-- RPS Score Card -->
+            <div class="score-card">
+              <div class="score-card-header">
+                <div class="card-title-icon">✂️</div>
+                <div>
+                  <h3>1. Rock, Paper, Scissors Score</h3>
+                  <span class="card-subtitle">Player vs NumPy Random Bot</span>
+                </div>
+              </div>
+              <div class="stats-metric-list">
+                <div class="metric-row">
+                  <span class="m-label">Total Matches Played:</span>
+                  <span class="m-value" id="score-rps-played">0</span>
+                </div>
+                <div class="metric-row win">
+                  <span class="m-label">Player Wins:</span>
+                  <span class="m-value" id="score-rps-user">0</span>
+                </div>
+                <div class="metric-row loss">
+                  <span class="m-label">Computer Wins:</span>
+                  <span class="m-value" id="score-rps-cpu">0</span>
+                </div>
+                <div class="metric-row tie">
+                  <span class="m-label">Ties:</span>
+                  <span class="m-value" id="score-rps-ties">0</span>
+                </div>
+                <div class="metric-row highlight">
+                  <span class="m-label">Player Win Percentage:</span>
+                  <span class="m-value" id="score-rps-pct">0%</span>
+                </div>
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-bar-fill win-bg" id="rps-win-bar" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- Guess Score Card -->
+            <div class="score-card">
+              <div class="score-card-header">
+                <div class="card-title-icon">🎯</div>
+                <div>
+                  <h3>2. Guess the Number Score</h3>
+                  <span class="card-subtitle">Deduction & Efficiency Records</span>
+                </div>
+              </div>
+              <div class="stats-metric-list">
+                <div class="metric-row">
+                  <span class="m-label">Total Games Played:</span>
+                  <span class="m-value" id="score-guess-played">0</span>
+                </div>
+                <div class="metric-row gold">
+                  <span class="m-label">Best Score (Least Tries):</span>
+                  <span class="m-value" id="score-guess-best">No games played yet</span>
+                </div>
+                <div class="metric-row">
+                  <span class="m-label">Total Attempts Taken:</span>
+                  <span class="m-value" id="score-guess-total-attempts">0</span>
+                </div>
+                <div class="metric-row highlight">
+                  <span class="m-label">Average Attempts / Game:</span>
+                  <span class="m-value" id="score-guess-avg">N/A</span>
+                </div>
+              </div>
+              <div class="rank-badge-box" id="guess-rank-box">
+                <span class="rank-title">Current Skill Rank:</span>
+                <span class="rank-name" id="guess-skill-rank">Rookie Guesser 🌱</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Raw Score Dictionary Inspector (as in Python dict) -->
+          <div class="code-mirror-box">
+            <div class="mirror-header">
+              <span>Python <code>scores</code> Dictionary (Live Memory Representation)</span>
+              <button class="btn-mini-copy" id="btn-copy-scores-json">Copy JSON</button>
+            </div>
+            <pre><code id="scores-json-view">{\n  "rps": { "played": 0, "user_wins": 0, "computer_wins": 0, "ties": 0 },\n  "guess": { "played": 0, "best_attempts": null, "total_attempts": 0 }\n}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 5. PYTHON CLI TERMINAL SIMULATOR ================= -->
+      <section id="view-terminal" class="tab-view">
+        <div class="game-container">
+          <div class="game-header-bar">
+            <div>
+              <h2>Python CLI Terminal Simulator</h2>
+              <p class="section-desc">Run <code>python main_project.py</code> directly in this simulated interactive console.</p>
+            </div>
+            <div class="terminal-ctrls">
+              <button class="btn btn-secondary" id="btn-restart-terminal">🔄 Restart Script</button>
+              <button class="btn btn-outline" id="btn-clear-terminal">🧹 Clear Screen</button>
+            </div>
+          </div>
+
+          <div class="terminal-window">
+            <div class="terminal-titlebar">
+              <div class="window-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span class="window-title">bash — python3 main_project.py (NumPy 2.x)</span>
+            </div>
+            <div class="terminal-body" id="terminal-output">
+              <!-- Terminal logs will be dynamically outputted here -->
+            </div>
+            <div class="terminal-input-row">
+              <span class="terminal-prompt">$</span>
+              <input type="text" id="terminal-input" placeholder="Type command / menu choice here..." autocomplete="off" />
+              <button id="terminal-enter-btn" class="btn btn-primary btn-mini">Send ↵</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 6. SOURCE CODE VIEWER ================= -->
+      <section id="view-code" class="tab-view">
+        <div class="game-container">
+          <div class="game-header-bar">
+            <div>
+              <h2>Python Source Code</h2>
+              <p class="section-desc">Inspect the original Python scripts developed for the NumPy learning exercises.</p>
+            </div>
+            <div class="code-tab-switchers">
+              <button class="code-tab-btn active" data-file="main">main_project.py</button>
+              <button class="code-tab-btn" data-file="p1">project_1.py (RPS)</button>
+              <button class="code-tab-btn" data-file="p2">project_2.py (Guess)</button>
+            </div>
+          </div>
+
+          <div class="code-viewer-panel">
+            <div class="code-meta-bar">
+              <span id="current-filename-label">main_project.py</span>
+              <button class="btn btn-secondary btn-mini" id="btn-copy-code">📋 Copy Code</button>
+            </div>
+            <pre class="code-pre"><code id="code-content" class="language-python"># Code loading...</code></pre>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="hub-footer">
+      <div class="footer-left">
+        <strong>GameFusion Multi-Game Hub</strong> — Built with Python, NumPy & Modern Web Standards.
+      </div>
+      <div class="footer-right">
+        <span>Runs 100% offline in browser</span> • <span>Instant Zero-Latency Gameplay</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
