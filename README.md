@@ -37,18 +37,8 @@ An interactive, responsive website and gaming portal inspired by and built aroun
 
 ## 🚀 How to Run the Website
 
-### Option 1: Direct Double Click (No server required!)
-Simply double-click on `index.html` in your file explorer. It will open directly in Google Chrome, Microsoft Edge, Firefox, or any modern web browser.
-
-### Option 2: Run via Python Built-in Server
-Open your PowerShell or terminal in this folder (`c:\Users\HI\Jitendra python\numpy`) and run:
-
-```bash
-python -m http.server 8000
-```
-
-Then open your browser and navigate to:
-[http://localhost:8000](http://localhost:8000)
+Open your browser and navigate to:
+https://jitujitendra29.github.io/GameFusion/
 
 ---
 
